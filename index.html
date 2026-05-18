@@ -28,8 +28,35 @@
             <button id="next-day" class="nav-button" type="button">
               Next day
             </button>
-            <button type="submit">Load picture</button>
+            <button
+              id="toggle-calendar"
+              class="nav-button calendar-toggle"
+              type="button"
+              aria-expanded="true"
+              aria-controls="calendar-panel"
+            >
+              ▲
+            </button>
           </div>
+          <section
+            id="calendar-panel"
+            class="calendar-panel"
+            aria-label="Monthly APOD calendar"
+          >
+            <div class="calendar-header">
+              <button id="prev-month" class="nav-button" type="button" aria-label="Previous month">
+                ←
+              </button>
+              <p id="calendar-month" class="calendar-month"></p>
+              <button id="next-month" class="nav-button" type="button" aria-label="Next month">
+                →
+              </button>
+            </div>
+            <div class="calendar-weekdays" aria-hidden="true">
+              <span>Sun</span><span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span>
+            </div>
+            <div id="calendar-grid" class="calendar-grid"></div>
+          </section>
         </form>
         <p class="helper-text">
           Choose any APOD date from June 16, 1995 through today.
