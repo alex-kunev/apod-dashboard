@@ -20,12 +20,46 @@
       <section class="controls card" aria-label="APOD controls">
         <form id="apod-form" class="control-row">
           <label for="date">Choose a date</label>
-          <input id="date" name="date" type="date" />
-          <button type="submit">Load picture</button>
+          <div class="date-actions">
+            <button id="prev-day" class="nav-button" type="button">
+              Last day
+            </button>
+            <input id="date" name="date" type="date" />
+            <button id="next-day" class="nav-button" type="button">
+              Next day
+            </button>
+            <button
+              id="toggle-calendar"
+              class="nav-button calendar-toggle"
+              type="button"
+              aria-expanded="true"
+              aria-controls="calendar-panel"
+            >
+              ▲
+            </button>
+          </div>
+          <section
+            id="calendar-panel"
+            class="calendar-panel"
+            aria-label="Monthly APOD calendar"
+          >
+            <div class="calendar-header">
+              <button id="prev-month" class="nav-button" type="button" aria-label="Previous month">
+                ←
+              </button>
+              <p id="calendar-month" class="calendar-month"></p>
+              <button id="next-month" class="nav-button" type="button" aria-label="Next month">
+                →
+              </button>
+            </div>
+            <div class="calendar-weekdays" aria-hidden="true">
+              <span>Sun</span><span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span>
+            </div>
+            <div id="calendar-grid" class="calendar-grid"></div>
+          </section>
         </form>
         <p class="helper-text">
-          Tip: leave the date empty to load today’s Astronomy Picture of the
-          Day.
+          Choose any APOD date from June 16, 1995 through today.
         </p>
       </section>
 

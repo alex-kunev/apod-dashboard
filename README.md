@@ -5,7 +5,9 @@ A simple HTML dashboard for NASA's Astronomy Picture of the Day (APOD) API.
 ## Features
 
 - View today's APOD
-- Load APOD by date
+- Load APOD by date with an expandable month calendar picker
+- Navigate with "Last day" / "Next day" buttons
+- Automatically load APOD when a date is selected
 - Supports image and video entries
 - Responsive single-page layout
 - Basic loading and error handling
@@ -56,7 +58,6 @@ https://alex-kunev.github.io/apod-dashboard/
 
 ## Future improvements
 
-- Add calendar limits based on APOD availability
 - Add loading skeletons
 - Add “random picture” support
 - Persist the last selected date
