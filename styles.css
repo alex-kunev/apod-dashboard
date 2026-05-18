@@ -84,7 +84,6 @@ body {
   flex-wrap: wrap;
   flex: 1 0 100%;
   gap: 0.75rem;
-  width: 100%;
   align-items: center;
 }
 
@@ -142,7 +141,6 @@ body {
 
 .calendar-panel {
   flex: 1 0 100%;
-  width: 100%;
   max-width: 50%;
   margin-top: 0.5rem;
   background: rgba(8, 20, 33, 0.85);
