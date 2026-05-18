@@ -143,6 +143,7 @@ body {
 .calendar-panel {
   flex: 1 0 100%;
   width: 100%;
+  max-width: 50%;
   margin-top: 0.5rem;
   background: rgba(8, 20, 33, 0.85);
   border: 1px solid var(--border);
@@ -287,6 +288,10 @@ body {
   .date-actions {
     flex-direction: column;
     align-items: stretch;
+  }
+
+  .calendar-panel {
+    max-width: 100%;
   }
 
   .content {
