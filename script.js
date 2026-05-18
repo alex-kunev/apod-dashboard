@@ -45,7 +45,7 @@ function addDays(date, days) {
   return next.toISOString().slice(0, 10);
 }
 
-function updateDateBoundaries() {
+function initializeDateBoundaries() {
   const today = getTodayDateString();
   dateInput.min = APOD_START_DATE;
   dateInput.max = today;
@@ -202,7 +202,7 @@ function renderApod(data) {
 }
 
 async function loadApod(date = "") {
-  const today = updateDateBoundaries();
+  const today = initializeDateBoundaries();
   const requestedDate = date || dateInput.value || today;
 
   if (!isValidDateString(requestedDate)) {
@@ -229,7 +229,10 @@ async function loadApod(date = "") {
 
     const data = await response.json();
     renderApod(data);
-    syncDateState(data.date || selectedDate);
+    const resolvedDate = data.date || selectedDate;
+    if (resolvedDate !== dateInput.value) {
+      syncDateState(resolvedDate);
+    }
     setStatus(`Showing APOD for ${data.date}.`);
   } catch (error) {
     setStatus(`Could not load APOD. ${error.message}`, true);
@@ -255,13 +258,12 @@ dateInput.addEventListener("change", () => {
   loadApod(dateInput.value);
 });
 
-dateInput.addEventListener("focus", () => {
+function openCalendarFromInput() {
   setCalendarOpen(true);
-});
+}
 
-dateInput.addEventListener("click", () => {
-  setCalendarOpen(true);
-});
+dateInput.addEventListener("focus", openCalendarFromInput);
+dateInput.addEventListener("click", openCalendarFromInput);
 
 toggleCalendarButton.addEventListener("click", () => {
   const isOpen = toggleCalendarButton.getAttribute("aria-expanded") !== "true";
@@ -282,7 +284,7 @@ nextMonthButton.addEventListener("click", () => {
   renderCalendar(dateInput.value);
 });
 
-dateInput.value = updateDateBoundaries();
+dateInput.value = initializeDateBoundaries();
 syncDateState(dateInput.value);
 setCalendarOpen(toggleCalendarButton.getAttribute("aria-expanded") === "true");
 loadApod();
