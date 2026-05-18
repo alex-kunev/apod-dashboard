@@ -140,7 +140,7 @@ body {
 }
 
 .calendar-panel {
-  flex: 1 0 100%;
+  flex: 0 1 50%;
   max-width: 50%;
   margin-top: 0.5rem;
   background: rgba(8, 20, 33, 0.85);
@@ -289,6 +289,7 @@ body {
   }
 
   .calendar-panel {
+    flex: 1 0 100%;
     max-width: 100%;
   }
 
