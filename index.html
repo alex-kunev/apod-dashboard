@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>NASA APOD Dashboard</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="container">
+      <header class="hero">
+        <p class="eyebrow">NASA Open API</p>
+        <h1>Astronomy Picture of the Day</h1>
+        <p class="subtitle">
+          Explore NASA’s daily featured space image or video with details from
+          the APOD API.
+        </p>
+      </header>
+
+      <section class="controls card" aria-label="APOD controls">
+        <form id="apod-form" class="control-row">
+          <label for="date">Choose a date</label>
+          <input id="date" name="date" type="date" />
+          <button type="submit">Load picture</button>
+        </form>
+        <p class="helper-text">
+          Tip: leave the date empty to load today’s Astronomy Picture of the
+          Day.
+        </p>
+      </section>
+
+      <section class="status" aria-live="polite">
+        <p id="status-message">Loading today’s picture...</p>
+      </section>
+
+      <section id="apod-card" class="apod card hidden" aria-label="APOD content">
+        <div id="media-wrapper" class="media-wrapper"></div>
+
+        <div class="content">
+          <div class="meta">
+            <p id="apod-date" class="date"></p>
+            <p id="apod-copyright" class="copyright"></p>
+          </div>
+
+          <h2 id="apod-title"></h2>
+          <p id="apod-explanation" class="explanation"></p>
+        </div>
+      </section>
+    </main>
+
+    <script src="script.js"></script>
+  </body>
+</html>
