@@ -1,8 +1,11 @@
 const API_KEY = "2zDiX5z20sM491AZeJRM0Smg5ZNsG42dspeqHB5V";
 const API_URL = "https://api.nasa.gov/planetary/apod";
+const APOD_START_DATE = "1995-06-16";
 
 const form = document.getElementById("apod-form");
 const dateInput = document.getElementById("date");
+const prevDayButton = document.getElementById("prev-day");
+const nextDayButton = document.getElementById("next-day");
 const statusMessage = document.getElementById("status-message");
 const apodCard = document.getElementById("apod-card");
 const mediaWrapper = document.getElementById("media-wrapper");
@@ -10,6 +13,42 @@ const apodDate = document.getElementById("apod-date");
 const apodCopyright = document.getElementById("apod-copyright");
 const apodTitle = document.getElementById("apod-title");
 const apodExplanation = document.getElementById("apod-explanation");
+
+function getTodayDateString() {
+  const now = new Date();
+  now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
+  return now.toISOString().slice(0, 10);
+}
+
+function isValidDateString(value) {
+  return /^\d{4}-\d{2}-\d{2}$/.test(value);
+}
+
+function clampDate(date, maxDate) {
+  if (date < APOD_START_DATE) return APOD_START_DATE;
+  if (date > maxDate) return maxDate;
+  return date;
+}
+
+function addDays(date, days) {
+  const [year, month, day] = date.split("-").map(Number);
+  const next = new Date(Date.UTC(year, month - 1, day));
+  next.setUTCDate(next.getUTCDate() + days);
+  return next.toISOString().slice(0, 10);
+}
+
+function updateDateBoundaries() {
+  const today = getTodayDateString();
+  dateInput.min = APOD_START_DATE;
+  dateInput.max = today;
+  return today;
+}
+
+function updateNavButtons(selectedDate) {
+  const today = dateInput.max || getTodayDateString();
+  prevDayButton.disabled = selectedDate <= APOD_START_DATE;
+  nextDayButton.disabled = selectedDate >= today;
+}
 
 function setStatus(message, isError = false) {
   statusMessage.textContent = message;
@@ -65,11 +104,27 @@ function renderApod(data) {
 }
 
 async function loadApod(date = "") {
+  const today = updateDateBoundaries();
+  const requestedDate = date || dateInput.value || today;
+
+  if (!isValidDateString(requestedDate)) {
+    setStatus("Please choose a valid date.", true);
+    return;
+  }
+
+  const selectedDate = clampDate(requestedDate, today);
+  dateInput.value = selectedDate;
+  updateNavButtons(selectedDate);
+
+  if (selectedDate !== requestedDate) {
+    setStatus(`Date adjusted to ${selectedDate}.`);
+  }
+
   setStatus("Loading picture...");
   apodCard.classList.add("hidden");
 
   try {
-    const response = await fetch(buildUrl(date));
+    const response = await fetch(buildUrl(selectedDate));
 
     if (!response.ok) {
       throw new Error(`API request failed with status ${response.status}`);
@@ -77,6 +132,8 @@ async function loadApod(date = "") {
 
     const data = await response.json();
     renderApod(data);
+    dateInput.value = data.date || selectedDate;
+    updateNavButtons(dateInput.value);
     setStatus(`Showing APOD for ${data.date}.`);
   } catch (error) {
     setStatus(`Could not load APOD. ${error.message}`, true);
@@ -88,4 +145,20 @@ form.addEventListener("submit", (event) => {
   loadApod(dateInput.value);
 });
 
+prevDayButton.addEventListener("click", () => {
+  const currentDate = dateInput.value || dateInput.max || getTodayDateString();
+  loadApod(addDays(currentDate, -1));
+});
+
+nextDayButton.addEventListener("click", () => {
+  const currentDate = dateInput.value || dateInput.max || getTodayDateString();
+  loadApod(addDays(currentDate, 1));
+});
+
+dateInput.addEventListener("change", () => {
+  loadApod(dateInput.value);
+});
+
+dateInput.value = updateDateBoundaries();
+updateNavButtons(dateInput.value);
 loadApod();

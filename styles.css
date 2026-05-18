@@ -79,6 +79,14 @@ body {
   min-width: 100%;
 }
 
+.date-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  width: 100%;
+  align-items: center;
+}
+
 .control-row input,
 .control-row button {
   font: inherit;
@@ -90,6 +98,10 @@ body {
 .control-row input {
   background: var(--panel-alt);
   color: var(--text);
+}
+
+.control-row input[type="date"] {
+  min-width: min(100%, 220px);
 }
 
 .control-row button {
@@ -104,6 +116,22 @@ body {
 .control-row button:hover {
   background: #86dbff;
   transform: translateY(-1px);
+}
+
+.control-row button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.nav-button {
+  background: transparent;
+  color: var(--text);
+  border: 1px solid var(--border);
+}
+
+.nav-button:hover:not(:disabled) {
+  background: var(--panel-alt);
 }
 
 .helper-text,
@@ -172,6 +200,11 @@ body {
   }
 
   .control-row {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .date-actions {
     flex-direction: column;
     align-items: stretch;
   }

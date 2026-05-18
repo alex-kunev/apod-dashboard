@@ -20,12 +20,19 @@
       <section class="controls card" aria-label="APOD controls">
         <form id="apod-form" class="control-row">
           <label for="date">Choose a date</label>
-          <input id="date" name="date" type="date" />
-          <button type="submit">Load picture</button>
+          <div class="date-actions">
+            <button id="prev-day" class="nav-button" type="button">
+              Last day
+            </button>
+            <input id="date" name="date" type="date" />
+            <button id="next-day" class="nav-button" type="button">
+              Next day
+            </button>
+            <button type="submit">Load picture</button>
+          </div>
         </form>
         <p class="helper-text">
-          Tip: leave the date empty to load today’s Astronomy Picture of the
-          Day.
+          Choose any APOD date from June 16, 1995 through today.
         </p>
       </section>
 
